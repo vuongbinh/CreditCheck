@@ -19,6 +19,7 @@ public class payment_CreditCard_Page extends BasePage{
     By btnReviewYourOrder_XPATH = By.xpath("//button[.='Review Your Order']");
     By paymentMethodCreditCard_XPATH = By.xpath("//li[.='Credit Card']");
     By titleCreditCard_XPATH = By.xpath("//h4[.='Credit Card']");
+    By cardImg_XPATH = By.xpath("//*[@id='full-width-tabpanel-payment-method']/div/div/div[2]/div/div/div/div/div/div/div[1]/div/div/div/div/div/div/img");
 
     public payment_CreditCard_Page(WebDriver webDriver){super(webDriver);}
 
@@ -34,12 +35,26 @@ public class payment_CreditCard_Page extends BasePage{
         element.findElement(paymentMethodCreditCard_XPATH).click();
     }
 
-    public void sentValue(int cardNumber, int cardExpiration, int cardSecurityCODE){
-        WebElement element = driver.findElement(paymentCardNumber_XPATH)
+    public void sentValue(String cardNumber, String cardExpiration, String cardSecurityCODE){
+        driver.findElement(paymentCardNumber_XPATH).sendKeys(cardNumber);
+        driver.findElement(paymentExpirationDate_XPATH).sendKeys(cardExpiration);
+        driver.findElement(paymentCVV_XPATH).sendKeys(cardSecurityCODE);
     }
 
-    public String getValue(String idx){
-        return "s";
+    public void btnClick(){
+        if (!driver.findElements(checkboxSOW_XPATH).isEmpty()){
+            driver.findElement(checkboxSOW_XPATH).click();
+        } else if (!driver.findElements(checkboxSLASA_XPATH).isEmpty()){
+            driver.findElement(checkboxSLASA_XPATH).click();
+        }
+    }
+
+    public void submit(){
+        driver.findElement(btnReviewYourOrder_XPATH).click();
+    }
+
+    public String getAttribute(){
+        return driver.findElement(cardImg_XPATH).getAttribute("src");
     }
 
     @Override
